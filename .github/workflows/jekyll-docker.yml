@@ -1,0 +1,38 @@
+name: Jekyll site CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the site in the jekyll/builder container
+      run: |
+        docker run \
+        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
+                    - nome: elmah.io Criar ação de implantação
+  # Você pode fixar no commit exato ou na versão.
+  # usos: elmahio/github-create-deployment-action@132611db9161ecebb1b07db6510d4ea5e0d2d415
+  usos: elmahio/github-create-deployment-action@v1
+  com:
+    # Uma chave de API com permissão para criar implantações.
+    Chave de API:
+    # O número da versão desta implantação. O valor da versão pode ser uma string compatível com SemVer ou qualquer outra sintaxe que você esteja usando como esquema de numeração de versão.
+    versão:
+    # Descrição opcional desta implantação. Pode ser em markdown ou texto simples.
+    descrição: # opcional
+    # O nome da pessoa responsável por criar esta implantação. Pode ser o nome obtido no seu servidor de implantação.
+    Nome de usuário: # opcional
+    # O e-mail da pessoa responsável por criar esta implantação. Pode ser o e-mail obtido do seu servidor de implantação.
+    userEmail: # opcional
+    # Por padrão, as implantações são anexadas a todos os logs da organização. Se você quiser que uma implantação seja anexada a apenas um log, defina isso como o ID desse log.
+    logId: # opcional
+          
